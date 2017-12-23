@@ -261,6 +261,55 @@ class BilinearFiller : public Filler<Dtype> {
   }
 };
 
+template <typename Dtype>
+class SobelFiller : public Filler<Dtype> {
+ public:
+  explicit SobelFiller(const FillerParameter& param)
+      : Filler<Dtype>(param) {}
+  virtual void Fill(Blob<Dtype>* blob) {
+    CHECK_EQ(blob->num_axes(), 4) << "Blob must be 4 dim.";
+    CHECK_EQ(blob->width(), blob->height()) << "Filter must be square";
+    Dtype* data = blob->mutable_cpu_data();
+    const int count = blob->count();
+    const Dtype value = 0;
+    CHECK(count);
+    for (int i = 0; i < count; ++i) {
+      data[i] = value;
+    }
+
+    int channels   = blob->channels();
+    int height     = blob->height();
+    int width      = blob->width();
+    int batch_size = count/channels/height/width;
+    CHECK_EQ(batch_size, 9) << "Batch_size of sobel-layer must be 9 dim.";
+	
+    int array_pass[3][3]={{ 0, 0, 0},{ 0, 1, 0},{ 0, 0, 0}};
+    int array_hori[3][3]={{-1, 0, 1},{-2, 0, 2},{-1, 0, 1}};
+    int array_vert[3][3]={{ 1, 2, 1},{ 0, 0, 0},{-1,-2,-1}};
+    int (*array)[3];
+    for(int m=0; m<batch_size; m++){
+      for(int n=0; n<channels; n++){
+	if(m==n){
+	  array = array_pass;
+	}else if((m-channels)==n){
+	  array = array_hori;
+	}else if((m-channels*2)==n){
+	  array = array_vert;
+	}else{
+	  continue;
+	}
+	for(int i=0; i<height; i++){
+	  for(int j=0; j<width; j++){
+	    data[ m*channels*height*width + n*height*width + i*width + j ] = array[i][j];
+	  }
+	}
+      }
+    }
+    CHECK_EQ(this->filler_param_.sparse(), -1)
+         << "Sparsity not supported by this Filler.";
+  }
+};
+
 /**
  * @brief Get a specific filler from the specification given in FillerParameter.
  *
@@ -284,6 +333,8 @@ Filler<Dtype>* GetFiller(const FillerParameter& param) {
     return new MSRAFiller<Dtype>(param);
   } else if (type == "bilinear") {
     return new BilinearFiller<Dtype>(param);
+  }else if (type == "sobel") {
+    return new SobelFiller<Dtype>(param);
   } else {
     CHECK(false) << "Unknown filler name: " << param.type();
   }
