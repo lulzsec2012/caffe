@@ -281,11 +281,17 @@ class SobelFiller : public Filler<Dtype> {
     int height     = blob->height();
     int width      = blob->width();
     int batch_size = count/channels/height/width;
-    CHECK_EQ(batch_size, 9) << "Batch_size of sobel-layer must be 9 dim.";
-	
+    //CHECK_EQ(batch_size, 3) << "Batch_size of sobel-layer must be 3/9 dim.";
+    //CHECK_EQ(batch_size, 9) << "Batch_size of sobel-layer must be 3/9 dim.";
+    std::cout<<"channels=  "<<channels<<std::endl;
+    std::cout<<"height=    "<<height<<std::endl;
+    std::cout<<"width=     "<<width<<std::endl;
+    std::cout<<"batch_size="<<batch_size<<std::endl;
     int array_pass[3][3]={{ 0, 0, 0},{ 0, 1, 0},{ 0, 0, 0}};
-    int array_hori[3][3]={{-1, 0, 1},{-2, 0, 2},{-1, 0, 1}};
-    int array_vert[3][3]={{ 1, 2, 1},{ 0, 0, 0},{-1,-2,-1}};
+    //int array_hori[3][3]={{-1, 0, 1},{-2, 0, 2},{-1, 0, 1}};
+    //int array_vert[3][3]={{ 1, 2, 1},{ 0, 0, 0},{-1,-2,-1}};
+    int array_hori[3][3]={{-0, 0, 0},{-0, 0, 0},{-0, 0, 0}};
+    int array_vert[3][3]={{ 0, 0, 0},{ 0, 0, 0},{-0,-0,-0}};
     int (*array)[3];
     for(int m=0; m<batch_size; m++){
       for(int n=0; n<channels; n++){

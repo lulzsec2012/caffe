@@ -1,0 +1,40 @@
+                                   ##fashion mnist
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/mnist/train_lenet_sobel.sh #add a sobel layer
+I1224 11:23:58.960276  9839 caffe.cpp:330] accuracy = 0.9138
+I1224 11:23:58.960285  9839 caffe.cpp:330] loss = 0.440041 (* 1 = 0.440041 loss)
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/mnist/train_lenet_sobel.sh # 000 000 000 hv ; equivalent to original lenet
+I1224 11:29:43.700579 11364 caffe.cpp:330] accuracy = 0.9032
+I1224 11:29:43.700588 11364 caffe.cpp:330] loss = 0.3573 (* 1 = 0.3573 loss)
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/mnist/train_lenet.sh #original fashion lenet
+I1224 11:40:42.795964 12333 caffe.cpp:330] accuracy = 0.9058
+I1224 11:40:42.795972 12333 caffe.cpp:330] loss = 0.346485 (* 1 = 0.346485 loss)
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/mnist/train_lenet_sobel.sh #add a common layer
+I1224 11:51:36.497419 12803 caffe.cpp:330] accuracy = 0.9004
+I1224 11:51:36.497429 12803 caffe.cpp:330] loss = 0.531161 (* 1 = 0.531161 loss)
+lzlu@lzlu-All-Series:~/work/caffe$
+
+
+                                   ##cifar10
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/cifar10/train_quick.sh #original cifar10-quick
+I1224 18:43:46.476078 30348 caffe.cpp:330] accuracy = 0.7514
+I1224 18:43:46.476086 30348 caffe.cpp:330] loss = 0.748924 (* 1 = 0.748924 loss)
+lzlu@lzlu-All-Series:~/work/caffe$ ./examples/cifar10/train_quick_sobel.sh #add a sobel layer
+I1224 18:55:56.753795 30592 caffe.cpp:330] accuracy = 0.7638
+I1224 18:55:56.753815 30592 caffe.cpp:330] loss = 0.742003 (* 1 = 0.742003 loss)
+lzlu@lzlu-All-Series:~/work/caffe$
+
+
+lzlu@lzlu-All-Series:~/work/caffe$./examples/cifar10/train_full.sh  #original cifar10-full
+I1224 20:36:57.845679 12803 caffe.cpp:330] accuracy = 0.8136
+I1224 20:36:57.845742 12803 caffe.cpp:330] loss = 0.535738 (* 1 = 0.535738 loss)
+lzlu@lzlu-All-Series:~/work/caffe$./examples/cifar10/train_full.sh  #add a sobel layer; there is LRN layers in cifar10-full
+I1224 21:32:23.781464 14602 caffe.cpp:330] accuracy = 0.8154
+I1224 21:32:23.781483 14602 caffe.cpp:330] loss = 0.547027 (* 1 = 0.547027 loss)
+lzlu@lzlu-All-Series:~/work/caffe$
+
+lzlu@lzlu-All-Series:~/work/caffe$./examples/cifar10/train_full.sh  #add a sobel layer; rm LRN layers in cifar10-full
+I1224 23:03:47.754458 17459 caffe.cpp:330] accuracy = 0.808
+I1224 23:03:47.754467 17459 caffe.cpp:330] loss = 0.592089 (* 1 = 0.592089 loss)
+lzlu@lzlu-All-Series:~/work/caffe$./examples/cifar10/train_full.sh  #original cifar10-full; rm LRN layers in cifar10-full
+I1224 23:43:47.248906 18670 caffe.cpp:330] accuracy = 0.8028
+I1224 23:43:47.248919 18670 caffe.cpp:330] loss = 0.601445 (* 1 = 0.601445 loss)
